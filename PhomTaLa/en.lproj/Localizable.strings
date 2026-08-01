@@ -1,0 +1,94 @@
+"home.title" = "Phỏm & Tá Lả";
+"home.subtitle" = "Vietnamese Rummy — Solo vs. 3 AI";
+"home.mode" = "Game Mode";
+"mode.phom" = "Phỏm";
+"mode.phom.subtitle" = "Classic meld rummy — straightforward scoring.";
+"mode.taLa" = "Tá Lả";
+"mode.taLa.subtitle" = "Same game, graduated win bonuses + the \"cháy\" penalty.";
+"home.difficulty" = "AI Difficulty";
+"home.play" = "Play";
+"home.rules" = "Full Rules";
+"home.howtoplay" = "How to Play";
+"home.upgrade" = "Unlock Hard AI & more →";
+"home.player.you" = "You";
+"home.player.left" = "Left";
+"home.player.across" = "Across";
+"home.player.right" = "Right";
+
+"difficulty.easy" = "Easy";
+"difficulty.normal" = "Normal";
+"difficulty.hard" = "Hard";
+
+"game.round" = "Round %d";
+"game.stockCount" = "Stock: %d";
+"game.discardEmpty" = "Empty";
+"game.yourTurn" = "Your turn";
+"game.drawPrompt" = "Draw from the stock or the discard pile";
+"game.meldHint" = "Select 3+ cards that form a valid meld";
+"game.discardHint" = "Select 1 card to discard and end your turn";
+"game.yourMelds" = "Your Melds";
+"game.opponentMelds" = "%@'s Melds";
+"game.nextRound" = "Next Round";
+"game.matchOver" = "Match Over";
+"game.done" = "Done";
+"game.noWinner" = "Stock Empty — Round Drawn";
+"game.handValue" = "Hand value: %d";
+
+"action.drawStock" = "Draw Stock";
+"action.drawDiscard" = "Draw Discard";
+"action.layMeld" = "Lay Meld";
+"action.discard" = "Discard";
+
+"win.uThuong" = "Ù thường";
+"win.uTo" = "Ù to";
+"win.uSach" = "Ù sạch";
+"win.chay" = "Cháy";
+
+"log.leads" = "%@ — first to draw";
+"log.drewStock" = "%@ drew from the stock";
+"log.drewDiscard" = "%@ drew from the discard pile";
+"log.laidMeld" = "%@ laid a meld: %@";
+"log.discarded" = "%@ discarded %@";
+"log.won" = "%@ won!";
+"log.wonBig" = "%@ won big — ù to!";
+"log.wonClean" = "%@ won with a clean sweep — ù sạch!";
+"log.chay" = "%@ got burned — cháy!";
+"log.drawEnded" = "Stock ran out — round drawn";
+
+"upgrade.title" = "Phỏm & Tá Lả Pro";
+"upgrade.subtitle" = "Unlock the full 4-player experience.";
+"upgrade.feature.hardAI" = "Hard AI — all 3 opponents track discards";
+"upgrade.feature.cardBacks" = "Exclusive card back designs";
+"upgrade.feature.unlimited" = "Unlimited matches, no ads, ever";
+"upgrade.owned" = "You own Phỏm & Tá Lả Pro ✓";
+"upgrade.buy" = "Unlock — %@";
+"upgrade.buyFallback" = "Unlock Pro";
+"upgrade.restore" = "Restore Purchases";
+"upgrade.close" = "Not Now";
+
+"rules.title" = "Full Rules";
+"rules.done" = "Done";
+
+"onboarding.goal.title" = "Meld Your Hand";
+"onboarding.goal.body" = "You and 3 AI opponents each get 9 cards. Draw one card each turn, then lay down any valid \"phỏm\" (meld) you can form — 3+ of a kind, or 3+ running cards of one suit.";
+"onboarding.combos.title" = "Draw, Meld, Discard";
+"onboarding.combos.body" = "Draw from the stock or take the top of the discard pile. Lay down melds if you have them, then discard one card to end your turn. Melds are locked in place once laid — no rearranging later.";
+"onboarding.special.title" = "Watch for \"Ù\" and \"Cháy\"";
+"onboarding.special.body" = "Meld your whole hand down to one card, then discard it, to win (\"ù\"). A perfect 10-card hand on your very first draw is \"ù sạch\" — a big bonus. In Tá Lả mode, feeding the very next player their winning card is \"cháy\" — a costly mistake. Tap \"Full Rules\" anytime for every detail.";
+"onboarding.next" = "Next";
+"onboarding.begin" = "Let's Play";
+
+"rules.deal.title" = "The Deal";
+"rules.deal.body" = "A standard 52-card deck, no jokers. 4 players, 9 cards each. The rest form a face-down stock pile, with the top card flipped face-up to start the discard pile. Ace always ranks lowest — there's no Ace-high run.";
+"rules.meld.title" = "What Counts as a Phỏm";
+"rules.meld.body" = "A \"phỏm ngang\" (set) is 3 or 4 cards of the same rank in different suits. A \"phỏm dọc\" (run) is 3+ consecutive ranks in the same suit. Once you lay a meld face-up, it's locked — you can never add more cards to it later.";
+"rules.turn.title" = "Your Turn";
+"rules.turn.body" = "Draw one card from the stock or the discard pile. Lay down any valid melds you can form from your hand. Then discard exactly one card, face-up, to end your turn.";
+"rules.win.title" = "Winning — Ù";
+"rules.win.body" = "You win the instant your hand is melded down to nothing but the one card you then discard. \"Ù sạch\" (clean win) is the rare case where your very first 10-card hand — before you've ever discarded — melds perfectly with nothing left over at all.";
+"rules.tala.title" = "Tá Lả Bonuses";
+"rules.tala.body" = "In Tá Lả mode, winning with every meld 4+ cards (no minimal 3-card melds) is \"ù to\" — double points. \"Ù sạch\" pays triple. \"Cháy\": if you discard a card and the very next player draws it and wins immediately, you pay double what you'd otherwise owe.";
+"rules.noWinner.title" = "If the Stock Runs Out";
+"rules.noWinner.body" = "If nobody has won by the time the stock pile is empty, the round ends in a draw. Whoever has the lowest total point-value left in their hand wins the round instead (ties split the take).";
+"rules.scoring.title" = "Scoring";
+"rules.scoring.body" = "The winner collects points from each opponent based on that opponent's unmelded hand value — number cards at face value, face cards worth 10, Aces worth 1. First to 3 round wins takes the match.";

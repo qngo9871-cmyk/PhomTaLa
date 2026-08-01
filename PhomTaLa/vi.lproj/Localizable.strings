@@ -1,0 +1,94 @@
+"home.title" = "Phỏm & Tá Lả";
+"home.subtitle" = "Bài Việt Nam — Chơi Một Mình Với 3 AI";
+"home.mode" = "Chế Độ Chơi";
+"mode.phom" = "Phỏm";
+"mode.phom.subtitle" = "Luật phỏm cổ điển — tính điểm đơn giản.";
+"mode.taLa" = "Tá Lả";
+"mode.taLa.subtitle" = "Luật y hệt, thêm mức thưởng ù và phạt \"cháy\".";
+"home.difficulty" = "Độ Khó AI";
+"home.play" = "Chơi";
+"home.rules" = "Luật Đầy Đủ";
+"home.howtoplay" = "Hướng Dẫn";
+"home.upgrade" = "Mở khóa AI Khó & hơn thế nữa →";
+"home.player.you" = "Bạn";
+"home.player.left" = "Trái";
+"home.player.across" = "Đối Diện";
+"home.player.right" = "Phải";
+
+"difficulty.easy" = "Dễ";
+"difficulty.normal" = "Vừa";
+"difficulty.hard" = "Khó";
+
+"game.round" = "Ván %d";
+"game.stockCount" = "Nọc: %d";
+"game.discardEmpty" = "Trống";
+"game.yourTurn" = "Đến lượt bạn";
+"game.drawPrompt" = "Bốc từ nọc hoặc từ bài bỏ";
+"game.meldHint" = "Chọn từ 3 lá hợp thành một phỏm hợp lệ";
+"game.discardHint" = "Chọn 1 lá để đánh và kết thúc lượt";
+"game.yourMelds" = "Phỏm Của Bạn";
+"game.opponentMelds" = "Phỏm Của %@";
+"game.nextRound" = "Ván Tiếp Theo";
+"game.matchOver" = "Kết Thúc Trận";
+"game.done" = "Xong";
+"game.noWinner" = "Hết Nọc — Hòa Ván";
+"game.handValue" = "Điểm bài: %d";
+
+"action.drawStock" = "Bốc Nọc";
+"action.drawDiscard" = "Bốc Bài Bỏ";
+"action.layMeld" = "Xếp Phỏm";
+"action.discard" = "Đánh Bài";
+
+"win.uThuong" = "Ù thường";
+"win.uTo" = "Ù to";
+"win.uSach" = "Ù sạch";
+"win.chay" = "Cháy";
+
+"log.leads" = "%@ — bốc bài trước";
+"log.drewStock" = "%@ bốc từ nọc";
+"log.drewDiscard" = "%@ bốc từ bài bỏ";
+"log.laidMeld" = "%@ xếp phỏm: %@";
+"log.discarded" = "%@ đánh %@";
+"log.won" = "%@ đã ù!";
+"log.wonBig" = "%@ ù to!";
+"log.wonClean" = "%@ ù sạch!";
+"log.chay" = "%@ bị cháy!";
+"log.drawEnded" = "Hết nọc — hòa ván";
+
+"upgrade.title" = "Phỏm & Tá Lả Pro";
+"upgrade.subtitle" = "Mở khóa trải nghiệm đầy đủ với 4 người chơi.";
+"upgrade.feature.hardAI" = "AI Khó — cả 3 đối thủ đều theo dõi bài đánh";
+"upgrade.feature.cardBacks" = "Mẫu mặt sau lá bài độc quyền";
+"upgrade.feature.unlimited" = "Chơi không giới hạn, không quảng cáo";
+"upgrade.owned" = "Bạn đã sở hữu Phỏm & Tá Lả Pro ✓";
+"upgrade.buy" = "Mở Khóa — %@";
+"upgrade.buyFallback" = "Mở Khóa Pro";
+"upgrade.restore" = "Khôi Phục Giao Dịch";
+"upgrade.close" = "Để Sau";
+
+"rules.title" = "Luật Đầy Đủ";
+"rules.done" = "Xong";
+
+"onboarding.goal.title" = "Xếp Phỏm";
+"onboarding.goal.body" = "Bạn và 3 đối thủ AI mỗi người 9 lá. Mỗi lượt bốc 1 lá, rồi xếp bất kỳ \"phỏm\" hợp lệ nào bạn có — từ 3 lá cùng chất trở lên, hoặc từ 3 lá liên tiếp cùng chất.";
+"onboarding.combos.title" = "Bốc, Xếp Phỏm, Đánh Bài";
+"onboarding.combos.body" = "Bốc từ nọc hoặc lấy lá trên cùng của bài bỏ. Xếp phỏm nếu có, rồi đánh 1 lá để kết thúc lượt. Phỏm đã xếp là cố định — không thể thêm bài vào sau đó.";
+"onboarding.special.title" = "Coi Chừng \"Ù\" và \"Cháy\"";
+"onboarding.special.body" = "Xếp hết bài chỉ còn 1 lá, rồi đánh lá đó, để \"ù\". Nếu 10 lá đầu tiên (ngay lượt bốc đầu) xếp phỏm hết sạch không cần đánh — đó là \"ù sạch\", thưởng lớn. Ở chế độ Tá Lả, đánh ra lá khiến người kế tiếp ù ngay là bị \"cháy\" — rất tốn điểm. Chạm \"Luật Đầy Đủ\" để xem chi tiết.";
+"onboarding.next" = "Tiếp";
+"onboarding.begin" = "Chơi Thôi";
+
+"rules.deal.title" = "Chia Bài";
+"rules.deal.body" = "Bộ bài 52 lá tiêu chuẩn, không có joker. 4 người chơi, mỗi người 9 lá. Số bài còn lại úp xuống làm nọc, lật lá trên cùng để bắt đầu bài bỏ. Quân Át (A) luôn nhỏ nhất — không có sảnh Q-K-A.";
+"rules.meld.title" = "Thế Nào Là Một Phỏm";
+"rules.meld.body" = "\"Phỏm ngang\" là 3 hoặc 4 lá cùng số khác chất. \"Phỏm dọc\" là từ 3 lá số liên tiếp cùng một chất. Khi đã xếp phỏm ra bàn, phỏm đó cố định — không thể thêm lá vào sau này.";
+"rules.turn.title" = "Lượt Chơi";
+"rules.turn.body" = "Bốc 1 lá từ nọc hoặc từ bài bỏ. Xếp mọi phỏm hợp lệ bạn có trong tay. Sau đó đánh đúng 1 lá, ngửa mặt, để kết thúc lượt.";
+"rules.win.title" = "Thắng Ván — Ù";
+"rules.win.body" = "Bạn ù ngay khi bài trên tay đã xếp phỏm hết, chỉ còn đúng 1 lá để đánh. \"Ù sạch\" là trường hợp hiếm: ngay từ 10 lá đầu tiên (trước khi từng đánh lá nào), bài xếp phỏm vừa khít, không dư lá nào.";
+"rules.tala.title" = "Thưởng Ở Chế Độ Tá Lả";
+"rules.tala.body" = "Ở Tá Lả, thắng với mọi phỏm đều từ 4 lá trở lên (không có phỏm 3 lá tối thiểu) là \"ù to\" — nhân đôi điểm. \"Ù sạch\" nhân ba điểm. \"Cháy\": nếu bạn đánh một lá và người kế tiếp bốc ngay lá đó rồi ù luôn, bạn phải đền gấp đôi số điểm đáng lẽ phải trả.";
+"rules.noWinner.title" = "Khi Hết Nọc";
+"rules.noWinner.body" = "Nếu chưa ai ù mà nọc đã hết, ván đó hòa. Ai có tổng điểm bài chưa xếp phỏm thấp nhất sẽ thắng ván thay thế (nếu bằng nhau thì chia đều).";
+"rules.scoring.title" = "Tính Điểm";
+"rules.scoring.body" = "Người thắng nhận điểm từ mỗi đối thủ dựa trên điểm bài chưa xếp phỏm của họ — lá số tính theo mặt bài, lá hình (J/Q/K) tính 10 điểm, Át tính 1 điểm. Ai thắng 3 ván trước sẽ thắng cả trận.";
