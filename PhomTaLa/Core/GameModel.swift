@@ -171,7 +171,13 @@ final class GameModel: ObservableObject {
         log(String(format: L("log.discarded"), players[playerIndex].name, card.label))
 
         if players[playerIndex].hand.isEmpty {
-            let allBig = !players[playerIndex].melds.isEmpty && players[playerIndex].melds.allSatisfy { $0.isBig }
+            // "Ù to"/"ù bụng" is a Tá Lả-only bonus tier (see rules.tala.body / CLAUDE.md) — in
+            // Phỏm mode every non-clean win is scored identically (1x), so gate the *detection*
+            // to Tá Lả too. Otherwise a Phỏm-mode win with all-big melds would still show the
+            // "Ù to!" banner/log line even though no bonus is actually applied, which reads as
+            // a bug (a mode-crossed win kind, not a genuinely distinct Phỏm ruleset outcome).
+            let allBig = mode == .taLa && !players[playerIndex].melds.isEmpty
+                && players[playerIndex].melds.allSatisfy { $0.isBig }
             settleWin(winner: playerIndex, kind: allBig ? .big : .normal)
             return true
         }

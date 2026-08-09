@@ -3,6 +3,7 @@ import SwiftUI
 struct UpgradeView: View {
     @StateObject private var purchases = PurchaseManager.shared
     @Environment(\.dismiss) private var dismiss
+    @AppStorage(CardBackStyle.storageKey) private var selectedBackStyle: String = CardBackStyle.classic.rawValue
 
     var body: some View {
         NavigationStack {
@@ -21,6 +22,8 @@ struct UpgradeView: View {
                         featureRow("infinity", L("upgrade.feature.unlimited"))
                     }
                     .padding(.horizontal, 30)
+
+                    cardBackPicker
 
                     if purchases.isPro {
                         Text(L("upgrade.owned")).foregroundStyle(.green).font(.headline)
@@ -54,6 +57,33 @@ struct UpgradeView: View {
                 .padding()
             }
             .toolbar(.hidden, for: .navigationBar)
+        }
+    }
+
+    /// The actual "Exclusive card back designs" feature: three selectable back styles, live
+    /// preview via `CardBackSwatch`, gated on Pro (locked/dimmed + non-interactive otherwise).
+    private var cardBackPicker: some View {
+        VStack(spacing: 8) {
+            Text(L("upgrade.cardBackPicker")).font(.caption).foregroundStyle(.white.opacity(0.6))
+            HStack(spacing: 16) {
+                ForEach(CardBackStyle.allCases) { style in
+                    Button {
+                        selectedBackStyle = style.rawValue
+                    } label: {
+                        VStack(spacing: 4) {
+                            CardBackSwatch(style: style, width: 42)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.yellow,
+                                                lineWidth: (purchases.isPro && selectedBackStyle == style.rawValue) ? 3 : 0)
+                                )
+                                .opacity(purchases.isPro ? 1 : 0.4)
+                            Text(L(style.nameKey)).font(.caption2).foregroundStyle(.white.opacity(0.6))
+                        }
+                    }
+                    .disabled(!purchases.isPro)
+                }
+            }
         }
     }
 

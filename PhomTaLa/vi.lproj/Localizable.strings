@@ -65,6 +65,10 @@
 "upgrade.buyFallback" = "Mở Khóa Pro";
 "upgrade.restore" = "Khôi Phục Giao Dịch";
 "upgrade.close" = "Để Sau";
+"upgrade.cardBackPicker" = "Mẫu Mặt Sau Lá Bài";
+"cardback.classic" = "Cổ Điển";
+"cardback.maroon" = "Đỏ Mận";
+"cardback.gold" = "Vàng Kim";
 
 "rules.title" = "Luật Đầy Đủ";
 "rules.done" = "Xong";

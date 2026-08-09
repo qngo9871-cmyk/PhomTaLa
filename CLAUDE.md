@@ -7,10 +7,73 @@ core, same XcodeGen/screenshot/icon tooling shape — but the game engine itself
 different: SamLoc is a shed-the-fastest trick-taking game (Combo-beats-Combo), this is a
 draw/meld/discard Rummy game (Meld-based). No code was shared between the two engines.
 
-**Status: 🟢 SUBMITTED, WAITING_FOR_REVIEW (2026-08-01).** App id `6796833347`, version `1.0.0`
+**Status: 🟡 READY FOR RESUBMISSION AFTER 2026-08-18, pending Apple's Guideline 5.6 account hold.**
+The whole developer account (19 apps, including this one) was hit with a Guideline 5.6
+"Developer Code of Conduct — Review Suspended" flag, almost certainly triggered by submitting
+~19 similar template-style apps within an 8-day window (2026-08-01 through 2026-08-08). This is
+an account-level flag, not a per-app rejection — resubmission is hard-blocked until 2026-08-18.
+Prior state: submitted/WAITING_FOR_REVIEW 2026-08-01, app id `6796833347`, version `1.0.0`
 (id `7808d607-e08a-4206-bcb5-4570b9f5c442`), build `b58dbfe8-b28b-4c5c-8b50-279e6fea814a`
 attached, reviewSubmission `5c081100-c8d1-487e-aa7e-05a24b1c72ff`. Release type: automatic
-(`AFTER_APPROVAL`).
+(`AFTER_APPROVAL`). **Do not touch App Store Connect or resubmit before 2026-08-18.**
+
+## Pre-resubmission quality pass (2026-08-09)
+
+Full local review (code, build, logic, localization, IAP) done ahead of the 2026-08-18 window —
+no ASC/App Store Connect actions taken, this pass was code-only. Bumped to **version 1.0.1,
+build 2** (`project.yml` + `Info.plist`).
+
+**Fixed:**
+- **Real bug**: `GameModel.discard()` computed the "ù to"/"ù bụng" (all-big-melds) win kind
+  regardless of game mode, so a Phỏm-mode win with all 4+-card melds would show the "Ù to! 🔥"
+  banner and log line even though Phỏm mode's scoring never applies that bonus (only Tá Lả does,
+  per `rules.tala.body`) — a mode-crossed win-kind bug, not a genuinely distinct Phỏm outcome.
+  Gated `allBig` detection to `mode == .taLa` only; Phỏm now always reports `.normal` (or
+  `.clean`) as its rules describe.
+- **Real bug (sold-but-not-delivered feature)**: `UpgradeView` advertised "Exclusive card back
+  designs" as a Pro perk, but no such feature existed anywhere in the code — `CardView` always
+  rendered one hardcoded blue-diamond back regardless of purchase state. Implemented it for
+  real: `CardBackStyle` (classic/maroon/gold, `PhomTaLa/Views/CardView.swift`), a
+  `CardBackSwatch` preview view, a picker in `UpgradeView` (locked/dimmed for non-Pro, live
+  selection for Pro, persisted via `@AppStorage("cardBackStyle")`), and `CardView` now renders
+  whichever style is selected (falling back to classic for non-Pro accounts even if a stale
+  selection is stored). New localized strings: `upgrade.cardBackPicker`, `cardback.classic`,
+  `cardback.maroon`, `cardback.gold` (en + vi). Verified visually on a Debug-build iPhone 17 Pro
+  Max simulator — all three swatches render distinctly, selection ring updates, picker disabled
+  for non-Pro.
+
+**Reviewed and confirmed already correct (no changes needed):**
+- Both Phỏm and Tá Lả rulesets are genuinely distinct in scoring/win-tiers/cháy (not a stubbed
+  copy) — see the "Judgment calls" section below and the bug fix above, which was the one place
+  they'd bled into each other.
+- `MeldFinder` set/run validation, Ace-low-only ranking, point values — re-verified by code
+  reading against the rules text; matches.
+- Full bilingual localization is real and complete — `en.lproj`/`vi.lproj` `Localizable.strings`
+  have matching key sets, no missing translations, correct Vietnamese diacritics, natural
+  (non-machine-translated) phrasing in both directions.
+- In-app onboarding (`OnboardingView`, 3-page walkthrough covering goal/turn-structure/ù+cháy)
+  and a full `RulesView` reference sheet (7 sections, including a Tá Lả-specific bonuses
+  section) both exist and are reachable from Home ("How to Play" / "Full Rules"). Covers both
+  variants, not just one.
+- `PurchaseManager.updateEntitlementStatus()`'s `#if DEBUG { isPro = true }` is the only DEBUG
+  special-case in the purchase path, guarded correctly, and doesn't double-gate against any
+  other isPro check — no instance of this developer's recurring DEBUG/isPro double-gating bug
+  pattern found in this app.
+- No TODO/FIXME/placeholder/Lorem-ipsum/dummy text anywhere in the source tree (full grep sweep,
+  zero hits).
+- `xcodegen generate` + Debug build for iOS Simulator: clean, zero warnings (besides the routine
+  "no AppIntents.framework dependency" notice), `BUILD SUCCEEDED`.
+
+**Differentiation work done this pass:** the card-back-style picker above is genuine new
+functionality (not present before), not just a bug fix — it's also small in scope per the
+"prioritize correctness over redesign" guidance for this review wave.
+
+**Still open / left for a future pass (not blocking resubmission):**
+- No live device sideload or interactive XCUITest/idb tap-through of a full round was performed
+  this pass either — still code-review + simulator-visual + logic-verification only, same
+  caveat as the original build.
+- The three new card-back gradients are palette-only (no new art/texture assets) — could be
+  revisited for a more premium look in a later pass if conversion data ever justifies it.
 
 ## Deploy / resubmit pattern
 

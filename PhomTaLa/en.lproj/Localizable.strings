@@ -65,6 +65,10 @@
 "upgrade.buyFallback" = "Unlock Pro";
 "upgrade.restore" = "Restore Purchases";
 "upgrade.close" = "Not Now";
+"upgrade.cardBackPicker" = "Card Back Design";
+"cardback.classic" = "Classic";
+"cardback.maroon" = "Maroon";
+"cardback.gold" = "Gold";
 
 "rules.title" = "Full Rules";
 "rules.done" = "Done";
