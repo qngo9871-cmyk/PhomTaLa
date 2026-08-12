@@ -7,7 +7,8 @@ core, same XcodeGen/screenshot/icon tooling shape — but the game engine itself
 different: SamLoc is a shed-the-fastest trick-taking game (Combo-beats-Combo), this is a
 draw/meld/discard Rummy game (Meld-based). No code was shared between the two engines.
 
-**Status: 🟡 READY FOR RESUBMISSION AFTER 2026-08-18, pending Apple's Guideline 5.6 account hold.**
+**Status: 🟡 READY FOR RESUBMISSION — scheduled batch 6, 2026-09-03 (staggered plan, with Igisoro +
+Janggi), pending Apple's Guideline 5.6 account hold lifting 2026-08-18.**
 The whole developer account (19 apps, including this one) was hit with a Guideline 5.6
 "Developer Code of Conduct — Review Suspended" flag, almost certainly triggered by submitting
 ~19 similar template-style apps within an 8-day window (2026-08-01 through 2026-08-08). This is
@@ -74,6 +75,84 @@ functionality (not present before), not just a bug fix — it's also small in sc
   caveat as the original build.
 - The three new card-back gradients are palette-only (no new art/texture assets) — could be
   revisited for a more premium look in a later pass if conversion data ever justifies it.
+
+## Polish pass (2026-08-12)
+
+Second, deeper pass ahead of the 2026-09-03 batch-6 resubmission slot, building on the
+2026-08-09 bug-focused pass above (not redone here). Bumped to **version 1.0.2, build 3**
+(`project.yml`, both project-level and target-level blocks).
+
+**Highest-stakes check: re-verified the card-back Pro feature is genuinely present, functional,
+and correctly gated** — this app carries the same "sold-but-not-delivered IAP feature" defect
+history as Tiến Lên and Hanafuda Koi-Koi, so the 2026-08-09 fix needed independent confirmation,
+not just a re-read of the code:
+- Built Debug for a dedicated `PhomTaLa-Capture` simulator, launched with `PT_CAPTURE=upgrade`
+  (DEBUG defaults `isPro = true`) — screenshot confirmed "You own Phỏm & Tá Lả Pro", all three
+  swatches (Classic/Maroon/Gold) rendering distinctly, Classic selected by default.
+- Wrote `cardBackStyle=maroon` directly into the app's UserDefaults (via `defaults write` +
+  `killall cfprefsd` to bust the simulator's preference cache), relaunched `PT_CAPTURE=upgrade` —
+  selection ring correctly moved to Maroon. Relaunched `PT_CAPTURE=midgame` with that same
+  persisted selection — **the maroon card back genuinely renders on the stock pile and all 3
+  opponents' face-down hands in actual live `GameModel` game state**, not just the picker preview.
+- Temporarily patched `PurchaseManager.updateEntitlementStatus()`'s DEBUG override to respect a
+  `PT_FORCE_FREE` launch-arg override (revert confirmed via `git diff` showing no changes after),
+  rebuilt, relaunched with the stale `maroon` selection still stored — confirmed a non-Pro account
+  sees all three swatches dimmed/non-interactive with no selection ring and an "Unlock Pro" button
+  (not "You own Pro"), **and** the live game correctly falls back to the classic blue back despite
+  the stale stored preference (the `effectiveBackStyle` defense-in-depth guard works as commented).
+- Conclusion: the feature is real, functional, and correctly gated in both directions — not a
+  repeat of the sold-but-missing-feature defect this developer has hit three times now.
+
+**UI bug found and fixed**: `screenshots/final/{en,vi}/04-upgrade.png` were stale — captured
+before the 2026-08-09 card-back picker was built, so they showed only the 3 feature rows and no
+picker UI at all (same "stale screenshot predating a later feature" class found in several
+sibling apps this wave). Recaptured all 10 screenshots (both locales) on a dedicated
+`PhomTaLa-Capture` simulator device to avoid the shared-simulator contamination race hitting
+other concurrent agents this session; visually inspected all 10 — no contamination, correct
+language per locale, and the new `04-upgrade.png` now shows the real card-back picker with a
+selection ring (a nice side effect: `02-midgame.png`/`03-win.png` also picked up the maroon back
+from the still-set test preference, which is genuine in-app UI, not fabricated). `capture_shots.py`
+itself updated to target a dedicated per-app simulator device by name (creating it if missing)
+instead of the previous generic `iPhone .*Pro Max` regex match, which risked grabbing whichever
+shared simulator another concurrently-running agent had booted.
+
+**Re-verified still solid, no changes needed**: onboarding, full bilingual in-app localization
+(en/vi `Localizable.strings`), IAP DEBUG/isPro gating (single source of truth, confirmed clean —
+temporarily flipped via `PT_FORCE_FREE` above, then reverted), mode-crossed win-kind fix from
+2026-08-09, no build warnings.
+
+**ASO refresh**: description and promotional text were already genuinely strong (authentic rules
+detail, real differentiation language, no template boilerplate) — left unchanged per the
+"only refresh keywords if copy is already strong" guidance. Refreshed keywords in both locales:
+dropped terms redundant with the already-indexed name/subtitle (`phỏm`, `tá lả`, standalone
+`rummy`, `bài việt nam` in vi, `bài online` in vi — the last one also risked implying online
+multiplayer this offline-vs-AI app doesn't have), added non-redundant high-value terms
+(`vietnamese`, `choi bai`, `4 player`, `meld` in en; `chơi bài`, `4 người chơi`, `gia đình`,
+`bốc bài` in vi).
+
+**Push-script bugs found and fixed in `~/asc-tools/asc_push_phomtala.py`** (same latent-bug
+sweep applied across this session's other apps):
+- `find_app_info`: returned the first appInfo matching *any* state in an unordered set, which
+  could non-deterministically pick a locked state over the truly-editable `REJECTED` one when
+  multiple appInfos exist. Fixed to try states in explicit priority order (matches the fix in
+  `asc_push_tienlen.py`/`asc_push_surakarta.py`/etc.).
+- `find_or_create_version` hardcoded `"1.0.0"` as the target version string unconditionally,
+  which would have silently reset this app back to 1.0.0 on every push regardless of the actual
+  local build version. Replaced with a module-level `VERSION_STRING` constant, now `"1.0.2"`.
+- `set_iap_localization` had no error handling around the PATCH/POST calls — a locked
+  `inAppPurchaseVersion` (409 `STATE_ERROR.IAP_VERSION_UNMODIFIABLE`, which this app's IAP hit
+  live during this session's push) would have raised an unhandled `RuntimeError` and aborted the
+  script before app/IAP pricing ran. Wrapped in try/except to degrade gracefully, matching the
+  sibling scripts' fix.
+
+**ASC push confirmed live**: `asc_push_phomtala.py` and `asc_push_phomtala_screenshots.py` both
+run successfully — app info (name/subtitle/categories), version bumped 1.0.0 → 1.0.2
+(`releaseType` stayed `AFTER_APPROVAL`), keywords/description/promo/support URL for both
+locales, all 10 screenshots re-uploaded and reordered, app base price (Free) and IAP price
+($2.99) both set. IAP name/description localization PATCH still 409s (pre-existing server-side
+lock on this IAP's version, unrelated to this session's changes) — now handled as a graceful
+skip instead of a crash; not fixable from this script, would need Apple to unlock the IAP version
+or a new IAP version to be cut. No submit/review-submission action taken.
 
 ## Deploy / resubmit pattern
 

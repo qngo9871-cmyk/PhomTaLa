@@ -37,14 +37,41 @@ FONT_PATHS = ["/System/Library/Fonts/SFNSDisplay.ttf", "/System/Library/Fonts/SF
 def sh(*a, **k): return subprocess.run(a, check=True, capture_output=True, text=True, **k)
 
 
+DEDICATED_DEVICE_NAME = "PhomTaLa-Capture"
+
+
 def find_device():
+    # Use a dedicated per-app simulator, not a generic shared "iPhone ... Pro Max" name —
+    # this batch runs several apps' capture scripts concurrently, and a shared device name
+    # has repeatedly caused one app's screenshot run to capture a DIFFERENT app's UI mid-launch
+    # (contamination seen across this review wave). Create the dedicated device if missing.
     out = subprocess.run(["xcrun", "simctl", "list", "devices", "available"],
                          capture_output=True, text=True).stdout
     for line in out.splitlines():
-        m = re.search(r"^\s*(iPhone .*Pro Max)\s+\(([0-9A-F\-]{36})\)", line)
+        if DEDICATED_DEVICE_NAME in line:
+            m = re.search(r"\(([0-9A-F\-]{36})\)", line)
+            if m:
+                return m.group(1), DEDICATED_DEVICE_NAME
+    # Not found yet — create it, cloning the runtime of any available "Pro Max" device.
+    runtime = None
+    for line in out.splitlines():
+        m = re.search(r"^\s*iPhone .*Pro Max\s+\([0-9A-F\-]{36}\)", line)
         if m:
-            return m.group(2), m.group(1)
-    raise SystemExit("No available 'iPhone ... Pro Max' simulator found")
+            rt_out = subprocess.run(["xcrun", "simctl", "list", "devicetypes"],
+                                     capture_output=True, text=True).stdout
+            break
+    dt_out = subprocess.run(["xcrun", "simctl", "list", "runtimes", "available"],
+                             capture_output=True, text=True).stdout
+    rt_match = re.search(r"(com\.apple\.CoreSimulator\.SimRuntime\.iOS-\S+)", dt_out)
+    if not rt_match:
+        raise SystemExit("No available iOS runtime found to create dedicated capture device")
+    created = subprocess.run(["xcrun", "simctl", "create", DEDICATED_DEVICE_NAME,
+                              "iPhone 17 Pro Max", rt_match.group(1)],
+                              capture_output=True, text=True)
+    udid = created.stdout.strip()
+    if not udid:
+        raise SystemExit(f"Failed to create dedicated capture device: {created.stderr}")
+    return udid, DEDICATED_DEVICE_NAME
 
 
 def build_app():
