@@ -9,8 +9,10 @@ draw/meld/discard Rummy game (Meld-based). No code was shared between the two en
 
 **Status: 🟡 READY FOR RESUBMISSION — scheduled batch 6, 2026-09-03 (staggered plan, with Igisoro +
 Janggi), pending Apple's Guideline 5.6 account hold lifting 2026-08-18. 7-day-trial-then-full-
-paywall change implemented 2026-08-18 (see below), code-only, NOT YET SUBMITTED — held for the
-user's explicit go-ahead.**
+paywall change implemented 2026-08-18 (see below). Build **1.0.3 (4)** archived, exported, and
+uploaded 2026-08-18, processed to `VALID` by Apple — **NOT YET submitted for review — held for
+the user's explicit go-ahead**, per the staggered resubmission plan. No new `appStoreVersion`
+was created and no build was attached to any version via the API this pass.
 The whole developer account (19 apps, including this one) was hit with a Guideline 5.6
 "Developer Code of Conduct — Review Suspended" flag, almost certainly triggered by submitting
 ~19 similar template-style apps within an 8-day window (2026-08-01 through 2026-08-08). This is
@@ -213,6 +215,18 @@ scheduled date, per the staggered resubmission plan:
    way to do this; it must be done from the version's own page (not the IAP's own page, which
    creates an orphaned draft submission — a mistake this portfolio hit once before).
 2. Submit for review.
+
+## Build staged for resubmission (2026-08-18)
+
+Archived, exported, and uploaded a fresh Release build carrying the 7-day-trial-then-paywall
+change above. Bumped to **version 1.0.3, build 4** (`project.yml`, both project- and
+target-level blocks, regenerated via `xcodegen generate`) — chosen higher than both the local
+1.0.2/3 and the existing ASC `appStoreVersion` 1.0.2 (id `7808d607-e08a-4206-bcb5-4570b9f5c442`,
+state `PREPARE_FOR_SUBMISSION`) to avoid any version-number collision. Archive/export/upload all
+succeeded (`xcrun altool`, Delivery UUID `3cdb26e8-8088-40cf-93b3-d8caf7f3fe7e`); polled the ASC
+API and confirmed the build reached `processingState: VALID`. **Deliberately NOT done**: no new
+`appStoreVersion` created, no build attached to any version, no `reviewSubmission` touched —
+submission remains the user's explicit call, on the 2026-09-03 batch-6 schedule.
 
 ## Deploy / resubmit pattern
 
