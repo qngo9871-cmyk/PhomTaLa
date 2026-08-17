@@ -10,6 +10,8 @@
 "home.rules" = "Luật Đầy Đủ";
 "home.howtoplay" = "Hướng Dẫn";
 "home.upgrade" = "Mở khóa AI Khó & hơn thế nữa →";
+"home.upgrade.trialended" = "Hết dùng thử — mở khóa để tiếp tục chơi →";
+"home.trialdays" = "Dùng thử miễn phí — còn %d ngày";
 "home.player.you" = "Bạn";
 "home.player.left" = "Trái";
 "home.player.across" = "Đối Diện";
@@ -57,6 +59,7 @@
 
 "upgrade.title" = "Phỏm & Tá Lả Pro";
 "upgrade.subtitle" = "Mở khóa trải nghiệm đầy đủ với 4 người chơi.";
+"upgrade.subtitle.trialended" = "Bản dùng thử 7 ngày đã hết. Mở khóa Phỏm & Tá Lả Pro để tiếp tục chơi.";
 "upgrade.feature.hardAI" = "AI Khó — cả 3 đối thủ đều theo dõi bài đánh";
 "upgrade.feature.cardBacks" = "Mẫu mặt sau lá bài độc quyền";
 "upgrade.feature.unlimited" = "Chơi không giới hạn, không quảng cáo";

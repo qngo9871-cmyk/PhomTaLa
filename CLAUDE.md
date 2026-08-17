@@ -8,7 +8,9 @@ different: SamLoc is a shed-the-fastest trick-taking game (Combo-beats-Combo), t
 draw/meld/discard Rummy game (Meld-based). No code was shared between the two engines.
 
 **Status: 🟡 READY FOR RESUBMISSION — scheduled batch 6, 2026-09-03 (staggered plan, with Igisoro +
-Janggi), pending Apple's Guideline 5.6 account hold lifting 2026-08-18.**
+Janggi), pending Apple's Guideline 5.6 account hold lifting 2026-08-18. 7-day-trial-then-full-
+paywall change implemented 2026-08-18 (see below), code-only, NOT YET SUBMITTED — held for the
+user's explicit go-ahead.**
 The whole developer account (19 apps, including this one) was hit with a Guideline 5.6
 "Developer Code of Conduct — Review Suspended" flag, almost certainly triggered by submitting
 ~19 similar template-style apps within an 8-day window (2026-08-01 through 2026-08-08). This is
@@ -17,6 +19,47 @@ Prior state: submitted/WAITING_FOR_REVIEW 2026-08-01, app id `6796833347`, versi
 (id `7808d607-e08a-4206-bcb5-4570b9f5c442`), build `b58dbfe8-b28b-4c5c-8b50-279e6fea814a`
 attached, reviewSubmission `5c081100-c8d1-487e-aa7e-05a24b1c72ff`. Release type: automatic
 (`AFTER_APPROVAL`). **Do not touch App Store Connect or resubmit before 2026-08-18.**
+
+## No-permanent-free-tier rollout (2026-08-18)
+
+Portfolio-wide fix, mirroring ChineseChess v1.0.6 and SamLoc (see
+`~/Projects/SamLoc/CLAUDE.md`, commit `6bfa351`): both those sibling apps had real App Store
+downloads but zero IAP purchases, because a permanently-free easy/normal AI tier was already
+the complete game for casual players. Applied the identical mechanism here. **Code-only change
+this pass — NOT YET SUBMITTED to the App Store, held for the user's explicit go-ahead** as part
+of the staggered resubmission plan (avoiding another near-identical-submissions flag like the
+Guideline 5.6 wave above); this rides along with, but does not itself trigger, the batch-6
+resubmission.
+
+**Gated before → after:**
+- Before: Easy and Normal AI difficulty were free forever; only Hard AI (and card backs) were
+  ever gated behind `isPro`.
+- After: a 7-day trial starts on first launch (`PurchaseManager.trialActive`/
+  `trialDaysRemaining`, backed by a `firstLaunchDate` UserDefaults key — existing installs with
+  no stored date get the clock started now rather than being locked out immediately). During the
+  trial, Easy/Normal are open and Hard stays locked (unchanged). Once the trial expires, **all
+  three difficulties** lock for non-Pro users — `HomeView.isLocked(_:)` returns `true` across
+  the board except for Pro accounts. Hard remains Pro-only at all times, trial or not. Home shows
+  "Free trial — %d day(s) left" while active; the footnote/upgrade button and `UpgradeView`'s
+  subtitle switch to "trial ended" copy afterward. Three new keys added to both
+  `en.lproj`/`vi.lproj` Localizable.strings: `home.upgrade.trialended`, `home.trialdays`,
+  `upgrade.subtitle.trialended`.
+- Also fixed a latent DEBUG double-gate bug found while in this file:
+  `PurchaseManager.updateEntitlementStatus()`'s `#if DEBUG isPro = true` was a bare override
+  with no `PT_CAPTURE` exemption — a screenshot captured with `PT_CAPTURE=upgrade` would have
+  shown "already purchased" instead of the real locked/buy state. Double-gated it to match the
+  SamLoc/ChineseChess reference pattern (`PT_CAPTURE`/`PT_SKIP_ONBOARDING` env vars, matching
+  this app's actual `ContentView.swift` naming). Note: the 2026-08-09 pass above had reviewed
+  this exact code and called it clean — that review was checking for a different symptom
+  (double-gating against another isPro check elsewhere), not this capture-mode leak, which is
+  why it wasn't caught until this pass.
+
+Verified via `xcodebuild -project PhomTaLa.xcodeproj -scheme PhomTaLa -destination
+'generic/platform=iOS' -configuration Debug build` against the existing project file (no
+`xcodegen generate` run this pass, since no source files were added/removed) — `** BUILD
+SUCCEEDED **`, no errors. No interactive Simulator tap-through of the trial-expired state was
+done this pass (code review + build verification only, same caveat as prior passes) — no
+version bump, no archive/export/submit.
 
 ## Pre-resubmission quality pass (2026-08-09)
 

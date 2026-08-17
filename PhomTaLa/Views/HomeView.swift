@@ -11,6 +11,14 @@ struct HomeView: View {
     @State private var selectedDifficulty: AIDifficulty = .easy
     @State private var game = GameModel()
 
+    /// After the 7-day trial expires, every difficulty locks for non-Pro users — there is no
+    /// permanently-free tier. Hard stays locked regardless of trial state (Pro-only, always).
+    private func isLocked(_ difficulty: AIDifficulty) -> Bool {
+        if purchases.isPro { return false }
+        if difficulty == .hard { return true }
+        return !purchases.trialActive
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -25,6 +33,10 @@ struct HomeView: View {
                             Text(L("home.title")).font(.system(size: 30, weight: .heavy, design: .rounded))
                                 .foregroundStyle(.white).multilineTextAlignment(.center)
                             Text(L("home.subtitle")).font(.subheadline).foregroundStyle(.white.opacity(0.7))
+                            if !purchases.isPro && purchases.trialActive {
+                                Text(String(format: L("home.trialdays"), purchases.trialDaysRemaining))
+                                    .font(.caption).foregroundStyle(.white.opacity(0.6))
+                            }
                         }
                         .padding(.top, 40)
 
@@ -46,7 +58,7 @@ struct HomeView: View {
                             Text(L("home.difficulty")).font(.caption).foregroundStyle(.white.opacity(0.6))
                             Picker("", selection: $selectedDifficulty) {
                                 ForEach(AIDifficulty.allCases) { d in
-                                    Text(L(d.titleKey) + (d == .hard && !purchases.isPro ? " 🔒" : "")).tag(d)
+                                    Text(L(d.titleKey) + (isLocked(d) ? " 🔒" : "")).tag(d)
                                 }
                             }
                             .pickerStyle(.segmented)
@@ -55,7 +67,7 @@ struct HomeView: View {
 
                         VStack(spacing: 14) {
                             Button {
-                                if selectedDifficulty == .hard && !purchases.isPro {
+                                if isLocked(selectedDifficulty) {
                                     showUpgrade = true
                                 } else {
                                     game = GameModel()
@@ -78,7 +90,8 @@ struct HomeView: View {
 
                             if !purchases.isPro {
                                 Button { showUpgrade = true } label: {
-                                    Text(L("home.upgrade")).font(.footnote).foregroundStyle(.yellow)
+                                    Text(L(purchases.trialActive ? "home.upgrade" : "home.upgrade.trialended"))
+                                        .font(.footnote).foregroundStyle(.yellow)
                                 }
                             }
                         }

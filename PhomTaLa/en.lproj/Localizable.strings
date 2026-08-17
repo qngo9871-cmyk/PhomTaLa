@@ -10,6 +10,8 @@
 "home.rules" = "Full Rules";
 "home.howtoplay" = "How to Play";
 "home.upgrade" = "Unlock Hard AI & more →";
+"home.upgrade.trialended" = "Trial ended — unlock to keep playing →";
+"home.trialdays" = "Free trial — %d day(s) left";
 "home.player.you" = "You";
 "home.player.left" = "Left";
 "home.player.across" = "Across";
@@ -57,6 +59,7 @@
 
 "upgrade.title" = "Phỏm & Tá Lả Pro";
 "upgrade.subtitle" = "Unlock the full 4-player experience.";
+"upgrade.subtitle.trialended" = "Your 7-day free trial has ended. Unlock Phỏm & Tá Lả Pro to keep playing.";
 "upgrade.feature.hardAI" = "Hard AI — all 3 opponents track discards";
 "upgrade.feature.cardBacks" = "Exclusive card back designs";
 "upgrade.feature.unlimited" = "Unlimited matches, no ads, ever";
