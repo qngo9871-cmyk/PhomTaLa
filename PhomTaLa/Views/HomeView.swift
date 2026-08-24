@@ -62,7 +62,7 @@ struct HomeView: View {
                                 }
                             }
                             .pickerStyle(.segmented)
-                            .frame(maxWidth: 320)
+                            .frame(maxWidth: 340)
                         }
 
                         VStack(spacing: 14) {
