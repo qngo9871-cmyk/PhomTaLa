@@ -17,13 +17,12 @@ final class LocalizationManager: ObservableObject {
         didSet { UserDefaults.standard.set(language.rawValue, forKey: "app_language") }
     }
 
-    private var bundle: Bundle = .main
+    private var bundle: Bundle { Self.bundle(for: language) }
 
     init() {
         let stored = UserDefaults.standard.string(forKey: "app_language")
         let lang = AppLanguage(rawValue: stored ?? "") ?? Self.systemDefault()
         self.language = lang
-        self.bundle = Self.bundle(for: lang)
     }
 
     private static func systemDefault() -> AppLanguage {
@@ -39,7 +38,6 @@ final class LocalizationManager: ObservableObject {
 
     func setLanguage(_ lang: AppLanguage) {
         language = lang
-        bundle = Self.bundle(for: lang)
     }
 
     func string(_ key: String) -> String {
